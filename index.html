@@ -10,6 +10,7 @@
       <div class="jumbotron">
         <h1>Daigou Entry Generator</h1>
         <p>Record daigou entry and generate PDFs!</p> 
+        <div class="alert alert-warning" role="alert"><strong>Note: </strong>When you refresh the page, all records will be gone! Make sure you generate the PDF before you refresh the page.</div>
       </div>
 
       <!-- start input row -->
@@ -35,11 +36,35 @@
       <!-- end input row -->
 
       <!-- start record row -->
-      <div class="row record-row">
-        
-      </div>
+      <div class="row record-row"></div>
       <!-- end record row -->
     </div>
+
+    <!-- start overlay 
+    <div class="lightbox">
+      <div class="lightbox-content">
+        <div class="row">
+          <form id="product-edit">
+            <div class="col-sm-4">
+              <h3><label for="product-name">Name</label><h3>
+              <input type="text" class="form-control input-lg" id="product-name">
+            </div>
+            <div class="col-sm-4">
+              <h3><label for="product-quantity">Quantity</label><h3>
+              <input type="text" class="form-control input-lg" id="product-quantity">
+            </div>
+            <div class="col-sm-4">
+              <h3><label for="product-cost">Cost</label><h3>
+              <input type="text" class="form-control input-lg" id="product-cost">
+            </div>
+            <div class="col-sm-4 pull-right">
+              <button type="button" class="btn btn-primary btn-lg pull-right" id="addBtn">Add New</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    -->
   </body>
   <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>

@@ -3,15 +3,17 @@
 
   // declare input fields
   var pArray     = [];
-  var $pForm     = $('#product-entry');
-  var $addBtn    = $('#addBtn');
-  var $pName     = $('#product-name');
-  var $pQuantity = $('#product-quantity');
-  var $pCost     = $('#product-cost');
+  var $addBtn    = $('#product-entry #addBtn');
+  var $pName     = $('#product-entry #product-name');
+  var $pQuantity = $('#product-entry #product-quantity');
+  var $pCost     = $('#product-entry #product-cost');
   var $recordRow = $('.record-row');
-  var trackingNum = '<div class="col-sm-4 flex"><label for="tracking-number">Tracking Number</label><input type="text" class="form-control input-lg" id="tracking-number"></div>';
-  var generateAuBtn = '<div class="col-sm-4 pull-right"><button type="button" class="btn btn-primary btn-lg pull-right" id="generateAuBtn">Generate PDF in $AUD</button></div>';
-  var generateRmbBtn = '<div class="col-sm-4"><button type="button" class="btn btn-success btn-lg pull-right" id="generateRmbBtn">Generate PDF in RMB</button></div>';
+  var trackingNum = '<div class="col-sm-3 flex"><label for="tracking-number">Tracking Number</label><input type="text" class="form-control input-lg" id="tracking-number"></div>';
+  var deliveryCost = '<div class="col-sm-3 flex"><label for="delivery-cost">Delivery Cost</label><input type="text" class="form-control input-lg" id="delivery-cost"></div>';
+  var generateAuBtn = '<div class="col-sm-3 pull-right"><button type="button" class="btn btn-primary btn-lg pull-right" id="generateAuBtn">Generate PDF in $AUD</button></div>';
+  var generateRmbBtn = '<div class="col-sm-3"><button type="button" class="btn btn-success btn-lg pull-right" id="generateRmbBtn">Generate PDF in RMB</button></div>';
+  var $overlay = $('.lightbox');
+  var $content = $('.lightbox .lightbox-content');
 
   function calculateTotalQuantity(){
     var total = 0;
@@ -41,16 +43,20 @@
     var printDate = 'Order Date: ' + date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear();
     // get tracking number
     var tracking = $('#tracking-number').val();
+    // get delivery cost
+    var delivery = parseFloat( $('#delivery-cost').val() ).toFixed(2);
 
 
     doc.text(20,20,printDate); // date
-    doc.text(20,40,'Tracking Number: ' + tracking); // tracking number
-    doc.text(20,60, 'Currency: AUD');
+    doc.text(20,40,'Tracking Number:   ' + tracking); // tracking number
+    doc.text(20,60,'Delivery Cost:   ' + delivery); // delivery cost
+    doc.text(20,80,'Currency:   AUD');
+
 
     var res = doc.autoTableHtmlToJson(document.getElementsByTagName("table")[0]);
     doc.autoTable(res.columns, res.data, {
       theme: 'striped',
-      startY: 100,
+      startY: 120,
       styles: {
         overflow: 'linebreak',
         fontSize: 16,
@@ -74,11 +80,14 @@
     var printDate = 'Order Date: ' + date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear();
     // get tracking number
     var tracking = $('#tracking-number').val();
+    // get delivery cost
+    var delivery = ( parseFloat( $('#delivery-cost').val() ) * 6 ).toFixed(2);
 
 
     doc.text(20,20,printDate); // date
-    doc.text(20,40,'Tracking Number: ' + tracking); // tracking number
-    doc.text(20,60, 'Currency: RMB');
+    doc.text(20,40,'Tracking Number:   ' + tracking); // tracking number
+    doc.text(20,60,'Delivery Cost:   ' + delivery); // delivery cost
+    doc.text(20,80,'Currency:   RMB');
 
     var res = doc.autoTableHtmlToJson(document.getElementsByTagName("table")[0]);
 
@@ -89,11 +98,11 @@
     }
 
     // reset the total cost to RMB
-    res.data[res.data.length - 1][res.data[res.data.length - 1].length -1] = calculateTotalCost() * 6;
+    res.data[res.data.length - 1][res.data[res.data.length - 1].length -1] = ( calculateTotalCost() * 6 ).toFixed(2);
 
     doc.autoTable(res.columns, res.data, {
       theme: 'grid',
-      startY: 100,
+      startY: 120,
       styles: {
         overflow: 'linebreak',
         fontSize: 16,
@@ -108,6 +117,22 @@
 
     doc.save( tracking + '.pdf');
   }
+
+/*
+  function editProductEntry(row){
+
+    //show overlay
+    $overlay.show();
+
+    //populate the input field with the edit product data
+    //console.log($('form'));
+    //retrieve the product from product array
+
+    //change row value
+    //save change
+
+  }
+*/
 
   // fired when add button clicked, add new entry to the table
   $addBtn.click(function(){
@@ -147,6 +172,11 @@
       $recordRow.append( trackingNum );
     } 
 
+    // add delivery cost input
+    if( $recordRow.children().length > 0 && $('#delivery-cost').length == 0 ){
+      $recordRow.append( deliveryCost );
+    } 
+
     // add generate RMB pdf button
     if( $recordRow.children().length > 0 && $('#generateRmbBtn').length == 0 ){
       $recordRow.append( generateRmbBtn );
@@ -161,6 +191,15 @@
 
     // clear all input fields
     document.getElementById('product-entry').reset();
+
+    // bind edit to each row
+/*    $('table tbody tr').bind('click', function(event){
+      //console.log(this);
+      editProductEntry(this);
+    });*/
   });
+
+  
+
 
 }(jQuery));
