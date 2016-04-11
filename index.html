@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/customize.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Daigou Entry Generator</h1>
+        <p>Record daigou entry and generate PDFs!</p> 
+      </div>
+
+      <!-- start input row -->
+      <div class="row">
+        <form id="product-entry">
+          <div class="col-sm-4">
+            <h3><label for="product-name">Name</label><h3>
+            <input type="text" class="form-control input-lg" id="product-name">
+          </div>
+          <div class="col-sm-4">
+            <h3><label for="product-quantity">Quantity</label><h3>
+            <input type="text" class="form-control input-lg" id="product-quantity">
+          </div>
+          <div class="col-sm-4">
+            <h3><label for="product-cost">Cost</label><h3>
+            <input type="text" class="form-control input-lg" id="product-cost">
+          </div>
+          <div class="col-sm-4 pull-right">
+            <button type="button" class="btn btn-primary btn-lg pull-right" id="addBtn">Add New</button>
+          </div>
+        </form>
+      </div>
+      <!-- end input row -->
+
+      <!-- start record row -->
+      <div class="row record-row">
+        
+      </div>
+      <!-- end record row -->
+    </div>
+  </body>
+  <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jspdf.min.js"></script>
+  <script type="text/javascript" src="js/jspdf.autotable.js"></script>
+  <script type="text/javascript" src="js/global.js"></script>
+</html>
